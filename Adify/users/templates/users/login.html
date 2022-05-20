@@ -21,14 +21,14 @@
     <form class="mt-6"  method="POST">
       {% csrf_token %}
      
-     {% if form.errors %}
-       <ul> 
-    {% for field in form %}
-        {% for error in field.errors %} 
-        <li style="color:red"class="text-red">{{ error|escape }}</li>
-        {% endfor %}
-    {% endfor %}
-       </ul>
+      {% if form.errors %}
+      <ul> 
+  
+       {% for error in form.non_field_errors %} 
+       <li style="color:red"class="text-red">{{ error|escape }}</li>
+       {% endfor %}
+   
+      </ul>
 {% endif %} 
 
 

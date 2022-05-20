@@ -1,4 +1,5 @@
 
+from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Profile
 from feed.models import Post
@@ -7,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.http import HttpResponseRedirect
@@ -60,10 +63,30 @@ def friend_list(request):
 
 @login_required
 def send_friend_request(request, id):
+    # current user
+	name = request.user
+	print(name)
+	current_site = get_current_site(request)
+	# to user / button add friend
 	user = get_object_or_404(User, id=id)
+	from_user = get_object_or_404(User, id=request.user.id)
 	frequest, created = FriendRequest.objects.get_or_create(
-			from_user=request.user,
+     #will be the user who is sending the request 
+			from_user=from_user,
 			to_user=user)
+	subject = 'Friend Request from ' 
+	mydict = {'user': user,'domain':current_site.domain,'uid': urlsafe_base64_encode(force_bytes(user.id)) }
+	html_template = 'email/send_request_html_email.html'
+	html_message = render_to_string(html_template, context=mydict)
+	to_email = user.email
+	recipient_list = [to_email]
+	email_from = settings.EMAIL_HOST_USER
+	print(to_email)
+	print(from_user.email)
+	message = EmailMessage(subject,html_message,email_from,recipient_list)
+	message.content_subtype = 'html'
+	message.send()
+ # redirect to user profile who i send request to 
 	return HttpResponseRedirect('/users/{}'.format(user.profile.slug))
 
 @login_required

@@ -56,6 +56,7 @@ class UserPostListView(LoginRequiredMixin, ListView):
 def post_detail(request, pk):
 	post = get_object_or_404(Post, pk=pk)
 	user = request.user
+	
 	is_liked = Like.objects.filter(user=user, post=post)
 	if request.method == 'POST':
 		form = NewCommentForm(request.POST)
