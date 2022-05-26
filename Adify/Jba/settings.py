@@ -170,13 +170,20 @@ LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 
 #SMTP Configuration
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'adify.ericbaw@gmail.com'
+# EMAIL_HOST_PASSWORD = '13991385'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'adify.ericbaw@gmail.com'
-EMAIL_HOST_PASSWORD = '13991385'
-
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+DEFAULT_FROM_EMAIL = 'adify.ericbaw@gmail.com'
 
 
 PAYPAL_RECEIVER_EMAIL = 'ericbaw@247ericpointcom.site'

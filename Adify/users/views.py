@@ -1,4 +1,4 @@
-
+# -----------------------------------------------------------------#
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Profile
@@ -16,7 +16,7 @@ from django.http import HttpResponseRedirect
 from .models import Profile, FriendRequest
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 import random
-
+# -----------------------------------------------------------------#
 User = get_user_model()
 
 @login_required
@@ -61,28 +61,28 @@ def friend_list(request):
 	}
 	return render(request, "users/friend_list.html", context)
 
+
+# -----------------------------------------------------------------#
 @login_required
 def send_friend_request(request, id):
-    # current user
-	name = request.user
-	print(name)
+    # current site
 	current_site = get_current_site(request)
 	# to user / button add friend
 	user = get_object_or_404(User, id=id)
+	# current user
 	from_user = get_object_or_404(User, id=request.user.id)
 	frequest, created = FriendRequest.objects.get_or_create(
      #will be the user who is sending the request 
 			from_user=from_user,
 			to_user=user)
-	subject = 'Friend Request from ' 
-	mydict = {'user': user,'domain':current_site.domain,'uid': urlsafe_base64_encode(force_bytes(user.id)) }
+	subject = f'Friend Request from {from_user}'
+	#'uid': urlsafe_base64_encode(force_bytes(from_user.id ))
+	mydict = {'from_user':from_user,'user': user,'domain':current_site.domain }
 	html_template = 'email/send_request_html_email.html'
 	html_message = render_to_string(html_template, context=mydict)
 	to_email = user.email
 	recipient_list = [to_email]
-	email_from = settings.EMAIL_HOST_USER
-	print(to_email)
-	print(from_user.email)
+	email_from = settings.DEFAULT_FROM_EMAIL
 	message = EmailMessage(subject,html_message,email_from,recipient_list)
 	message.content_subtype = 'html'
 	message.send()
@@ -101,17 +101,33 @@ def cancel_friend_request(request, id):
 @login_required
 def accept_friend_request(request, id):
 	from_user = get_object_or_404(User, id=id)
+	
+	print(from_user)
 	frequest = FriendRequest.objects.filter(from_user=from_user, to_user=request.user).first()
+	print(frequest)
 	user1 = frequest.to_user
 	user2 = from_user
 	user1.profile.friends.add(user2.profile)
 	user2.profile.friends.add(user1.profile)
+	current_site = get_current_site(request)
+	subject = 'Your friend request has been accepted'
+	mydict = {'user2':user2,'domain':current_site.domain, 'user':user1 }
+	html_template = 'email/accept_request_html_email.html'
+	html_message = render_to_string(html_template, context=mydict)
+	to_email = from_user.email
+	recipient_list = [to_email]
+	email_from = settings.DEFAULT_FROM_EMAIL
+	message = EmailMessage(subject,html_message,email_from,recipient_list)
+	message.content_subtype = 'html'
+	message.send()
+	# delete after accept : its become friend
 	if(FriendRequest.objects.filter(from_user=request.user, to_user=from_user).first()):
 		request_rev = FriendRequest.objects.filter(from_user=request.user, to_user=from_user).first()
 		request_rev.delete()
 	frequest.delete()
+	
 	return HttpResponseRedirect('/users/{}'.format(request.user.profile.slug))
-
+# decline friend request
 @login_required
 def delete_friend_request(request, id):
 	from_user = get_object_or_404(User, id=id)
@@ -127,11 +143,14 @@ def delete_friend(request, id):
 	return HttpResponseRedirect('/users/{}'.format(friend_profile.slug))
 
 @login_required
+# /users/<name>
 def profile_view(request, slug):
 	p = Profile.objects.filter(slug=slug).first()
 	u = p.user
 	sent_friend_requests = FriendRequest.objects.filter(from_user=p.user)
+ 
 	rec_friend_requests = FriendRequest.objects.filter(to_user=p.user)
+ 
 	user_posts = Post.objects.filter(user_name=u)
 
 	friends = p.friends.all()
@@ -175,7 +194,7 @@ def register(request):
 			html_template = 'email/wellcome.html'
 			html_message = render_to_string(html_template, context=mydict)
 			subject = 'Welcome to a Adify'
-			email_from = settings.EMAIL_HOST_USER
+			email_from = settings.DEFAULT_FROM_EMAIL
 			recipient_list = [email]
 			message = EmailMessage(subject, html_message,
                                    email_from, recipient_list) 

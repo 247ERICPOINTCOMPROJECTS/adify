@@ -911,8 +911,16 @@ select {
   margin-top: -5rem;
 }
 
+.mt-9 {
+  margin-top: 2.25rem;
+}
+
 .mt-7 {
   margin-top: 1.75rem;
+}
+
+.ml-8 {
+  margin-left: 2rem;
 }
 
 .block {
@@ -1061,12 +1069,20 @@ select {
   width: 50%;
 }
 
+.w-screen {
+  width: 100vw;
+}
+
 .max-w-xl {
   max-width: 36rem;
 }
 
 .max-w-2xl {
   max-width: 42rem;
+}
+
+.max-w-lg {
+  max-width: 32rem;
 }
 
 .border-collapse {
@@ -1172,6 +1188,12 @@ select {
   --tw-space-y-reverse: 0;
   margin-top: calc(3.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(3.5rem * var(--tw-space-y-reverse));
+}
+
+.space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .divide-x > :not([hidden]) ~ :not([hidden]) {
@@ -1300,6 +1322,15 @@ select {
   background-color: rgb(125 201 240 / var(--tw-bg-opacity));
 }
 
+.bg-red-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 202 202 / var(--tw-bg-opacity));
+}
+
+.stroke-red-700 {
+  stroke: #b91c1c;
+}
+
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;
@@ -1323,6 +1354,10 @@ select {
 
 .p-12 {
   padding: 3rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
 }
 
 .py-2 {
@@ -1615,6 +1650,16 @@ select {
 .text-neutral-800 {
   --tw-text-opacity: 1;
   color: rgb(38 38 38 / var(--tw-text-opacity));
+}
+
+.text-red-900 {
+  --tw-text-opacity: 1;
+  color: rgb(127 29 29 / var(--tw-text-opacity));
+}
+
+.text-red-800 {
+  --tw-text-opacity: 1;
+  color: rgb(153 27 27 / var(--tw-text-opacity));
 }
 
 .antialiased {

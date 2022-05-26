@@ -73,7 +73,7 @@ enctype="multipart/form-data">
              <p>Business Name: {{ u.profile.business }}</p>
               <p>About: {{ u.profile.bio }}</p>
             <p> Rate Us Below</p>
-<!-- ShareThis BEGIN --><div class="sharethis-inline-reaction-buttons"></div><!-- ShareThis END -->
+
               <hr class="my-2" />
               {% if request.user == u %}
               <a class="btn btn-info" href="{% url 'edit_profile' %}"
@@ -125,6 +125,7 @@ enctype="multipart/form-data">
       </div>
     </div>
     <br />
+    {% comment %} if this is my profile show me this {% endcomment %}
     {% if request.user == u %}
     <div class="row">
       <div class="col-md-6">
@@ -179,7 +180,7 @@ enctype="multipart/form-data">
               href="{{ r_request.from_user.profile.get_absolute_url }}"
               ><b>{{ r_request.from_user.username }}</b>
             </a>
- <!-- ShareThis BEGIN --><div class="sharethis-inline-reaction-buttons"></div><!-- ShareThis END -->
+
             <small class="float-right">
               <a
                 class="btn btn-success mr-2"
