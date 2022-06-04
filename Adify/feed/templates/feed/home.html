@@ -19,26 +19,77 @@
               </div>
     </form>
 
-    
+    {% endblock searchform %} 
 {# --------------------------End---Search Form----------------------  #}
-{% endblock searchform %} 
+
+
+ {% block aside %} 
+ <div
+ class="row-span-2 lg:visible md:flex   sm:hidden  xs:hidden  border border-gray-100 bg-purple-100   transition-shadow shadow-xl hover:shadow-xl ">
+ 
+ 
+    right
+     
+ 
+ </div>
+{% endblock aside %} 
+
+{% block side %} 
+<div
+			class="row-span-3 lg:visible md:flex  sm:hidden  xs:hidden border border-gray-100 bg-purple-100   transition-shadow shadow-xl hover:shadow-xl ">
+			
+			
+				left
+				
+			
+			</div>
+{% endblock side %}
+{% block form %}
+<div class="flex justify-center align-center mx-2   my-10   col-span-2  px-2  ">
+<div class="w-full max-w-xl">
+    <form class="bg-white shadow rounded-lg mb-5 p-4">
+        <textarea name="message" placeholder="Type something..." class=" w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"></textarea>
+        <footer class="flex justify-between mt-2">
+            <div class="flex gap-2">
+                <span class="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                </span>
+                <span class="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                </span>
+                <span class="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                </span>
+            </div>
+            <button class="flex items-center py-2 px-4 rounded-lg text-sm bg-blue-500 text-white shadow-lg">Send 
+               <svg class="ml-1" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg> 
+            </button>
+        </footer>
+    </form>
+
+</div>
+</div>
+     {% endblock form %} 
+     
+     
+
+
+
 
 
 {% block content %}
 
 {# --------------------------Post Container-------------------------------  #}
-
               
                 {% for post in posts %}
-                    <div class='flex max-w-xl my-10 bg-white shadow-md rounded-lg overflow-hidden mx-auto'>
-                        
+                    <div class='flex   max-w-xl my-10 bg-white shadow-md rounded-lg overflow-hidden mx-auto '>
                             <div class='w-full'>
+
                                 <div class="flex flex-row mt-2 px-2 py-3 mx-3">
                             
                                     <div class="w-auto h-auto rounded-md border-2 border-cyan-500">
                                         <a href="{{ post.user_name.profile.get_absolute_url }}">
-                                        <img class='w-12 h-12 object-cover rounded-md shadow cursor-pointer' alt='User avatar' src="{{ post.user_name.profile.image.url }}">
-                                    </a>
+                                        <img class='w-12 h-12 object-cover rounded-md shadow cursor-pointer' alt='User avatar' src="{{ post.user_name.profile.image.url }}"></a>
                                     </div>
                                     
                                     <div class="flex flex-col leading-7 mb-2 ml-4 mt-1">
@@ -62,12 +113,12 @@
                                     <a href="{% url 'post-detail' post.id %}">
                                     <img x-show="tab === 'img'" class="rounded w-[536px] h-[302px]" {% if post.pic %}  src="{{ post.pic.url }}" {% else %} src="{% static 'path/to/img' %}" {% endif %} />
                                     <video x-cloak x-show="tab === 'vid'" class="rounded w-[536px] h-[302px]" controls="controls"{% if post.video %} src="{{ post.video.url }}" {% else %} src="{% static 'video' %}" {% endif %} type="video/mp4"></video>
-                                </a>
-                                <div class='flex justify-center'>
+                                    </a>
+                                    <div class='flex justify-center'>
                                       <button class="mt-2 mx-2 p-1 w-2 h-2 rounded-full bg-slate-400  hover:bg-cyan-500  active:cyan-500 focus:ring-1 focus:ring focus:ring-cyan-500  focus:bg-cyan-500" :class="{ 'active:cyan-500': tab === 'img' }" @click="tab = 'img'"></button>
                                       <button class="mt-2 mx-2 p-1 w-2 h-2 rounded-full bg-slate-400 hover:bg-cyan-500  active:cyan-500 focus:ring-1 focus:ring focus:ring-cyan-500  focus:bg-cyan-500" :class="{ 'active:cyan-500': tab === 'vid' }" @click="tab = 'vid'"></button>
+                                    </div>
                                 </div>
-                            </div>
 
 
                                 <div class="flex flex-row justify-start mb-4">
@@ -96,10 +147,8 @@
                                            <span class="ml-2 capitalize"> {{ post.category }}</span>
                                         </span>
 
-
-
-                              <span class="flex flex-row  items-center  h-8 px-2 py-2 text-center rounded  cursor-pointer mr-2  border">
-                                <svg width="20px" height="20px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(4 2)"><path d="m6.5 16.5407715.6311176-.7118691c.71585099-.8191184 1.36011688-1.5983525 1.93279767-2.3377022l.4733382-.6239608c1.97516433-2.6615039 2.96274653-4.77276704 2.96274653-6.33378943 0-3.33218241-2.6862915-6.03344997-6-6.03344997s-6 2.70126756-6 6.03344997c0 1.56102239.98758218 3.67228553 2.96274653 6.33378943l.4733382.6239608c.73630387.9505925 1.5909423 1.9671163 2.56391527 3.0495713z"/><circle cx="6.5" cy="6.5" r="2.5"/></g></svg>
+                                        <span class="flex flex-row  items-center  h-8 px-2 py-2 text-center rounded  cursor-pointer mr-2  border">
+                                           <svg width="20px" height="20px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(4 2)"><path d="m6.5 16.5407715.6311176-.7118691c.71585099-.8191184 1.36011688-1.5983525 1.93279767-2.3377022l.4733382-.6239608c1.97516433-2.6615039 2.96274653-4.77276704 2.96274653-6.33378943 0-3.33218241-2.6862915-6.03344997-6-6.03344997s-6 2.70126756-6 6.03344997c0 1.56102239.98758218 3.67228553 2.96274653 6.33378943l.4733382.6239608c.73630387.9505925 1.5909423 1.9671163 2.56391527 3.0495713z"/><circle cx="6.5" cy="6.5" r="2.5"/></g></svg>
                                            <span class="ml-2 capitalize"> {{ post.targetlocation }}</span>
                                         </span>
                                         {% endif %}
@@ -107,43 +156,35 @@
                                 </div>
 
 
-
-
-
                                 <div class="border-b border-gray-100"></div> 
                         
                                 <div class="flex w-full border-t border-gray-100">
 
                                     <div x-data="{isLiked: false}" class="mt-3 mx-5 flex flex-row content-center">
-{% comment %} heart {% endcomment %}
-<div class='flex text-gray-700 font-normal text-sm rounded-md mb-2 mr-4 items-center' >
-                                     <button @click="isLiked = !isLiked" class="btn  like" id="{{ post.id }}">
-                                        {% if post in liked_post %} 
 
-                                        <a href="{% url 'post-like' %}"  id="likebtn{{ post.id }}">
+                                        <div class='flex text-gray-700 font-normal text-sm rounded-md mb-2 mr-4 items-center' >
+                                            <button @click="isLiked = !isLiked" class="btn  like" id="{{ post.id }}">
+                                             {% if post in liked_post %} 
+
+                                             <a href="{% url 'post-like' %}"  id="likebtn{{ post.id }}">
                                                <svg x-if="!isLiked" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path     fill="#E23939"    d="M6.2798 0.500643C6.9098 0.519803 7.5198 0.629803 8.1108 0.830803H8.1698C8.2098 0.849803 8.2398 0.870803 8.2598 0.889803C8.4808 0.960803 8.6898 1.0408 8.8898 1.1508L9.2698 1.3208C9.4198 1.4008 9.5998 1.5498 9.6998 1.6108C9.7998 1.6698 9.9098 1.7308 9.9998 1.7998C11.1108 0.950803 12.4598 0.490803 13.8498 0.500643C14.4808 0.500643 15.1108 0.589803 15.7098 0.790803C19.4008 1.9908 20.7308 6.0408 19.6198 9.5808C18.9898 11.3898 17.9598 13.0408 16.6108 14.3898C14.6798 16.2598 12.5608 17.9198 10.2798 19.3498L10.0298 19.5008L9.7698 19.3398C7.4808 17.9198 5.3498 16.2598 3.4008 14.3798C2.0608 13.0308 1.0298 11.3898 0.389803 9.5808C-0.740197 6.0408 0.589803 1.9908 4.3208 0.769803C4.6108 0.669803 4.9098 0.599803 5.2098 0.560803H5.3298C5.6108 0.519803 5.8898 0.500643 6.1698 0.500643H6.2798ZM15.1898 3.6608C14.7798 3.5198 14.3298 3.7408 14.1798 4.1608C14.0398 4.5808 14.2598 5.0408 14.6798 5.1898C15.3208 5.4298 15.7498 6.0608 15.7498 6.7598V6.7908C15.7308 7.0198 15.7998 7.2408 15.9398 7.4108C16.0798 7.5808 16.2898 7.6798 16.5098 7.7008C16.9198 7.6898 17.2698 7.3608 17.2998 6.9398V6.8208C17.3298 5.4198 16.4808 4.1508 15.1898 3.6608Z" />
                                                 </svg>
-                                            </a>
+                                             </a>
 
                                                 {% else %}
-                                                <a href="{% url 'post-like' %}"  id="likebtn{{ post.id }}">
+                                                
+                                            <a href="{% url 'post-like' %}"  id="likebtn{{ post.id }}">
                                                 <svg x-if="isLiked"  width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path     fill="" stroke="#b8c5cb"  d="M6.2798 0.500643C6.9098 0.519803 7.5198 0.629803 8.1108 0.830803H8.1698C8.2098 0.849803 8.2398 0.870803 8.2598 0.889803C8.4808 0.960803 8.6898 1.0408 8.8898 1.1508L9.2698 1.3208C9.4198 1.4008 9.5998 1.5498 9.6998 1.6108C9.7998 1.6698 9.9098 1.7308 9.9998 1.7998C11.1108 0.950803 12.4598 0.490803 13.8498 0.500643C14.4808 0.500643 15.1108 0.589803 15.7098 0.790803C19.4008 1.9908 20.7308 6.0408 19.6198 9.5808C18.9898 11.3898 17.9598 13.0408 16.6108 14.3898C14.6798 16.2598 12.5608 17.9198 10.2798 19.3498L10.0298 19.5008L9.7698 19.3398C7.4808 17.9198 5.3498 16.2598 3.4008 14.3798C2.0608 13.0308 1.0298 11.3898 0.389803 9.5808C-0.740197 6.0408 0.589803 1.9908 4.3208 0.769803C4.6108 0.669803 4.9098 0.599803 5.2098 0.560803H5.3298C5.6108 0.519803 5.8898 0.500643 6.1698 0.500643H6.2798ZM15.1898 3.6608C14.7798 3.5198 14.3298 3.7408 14.1798 4.1608C14.0398 4.5808 14.2598 5.0408 14.6798 5.1898C15.3208 5.4298 15.7498 6.0608 15.7498 6.7598V6.7908C15.7308 7.0198 15.7998 7.2408 15.9398 7.4108C16.0798 7.5808 16.2898 7.6798 16.5098 7.7008C16.9198 7.6898 17.2698 7.3608 17.2998 6.9398V6.8208C17.3298 5.4198 16.4808 4.1508 15.1898 3.6608Z" />
                                                     </svg>
-                                                </a>
+                                            </a>
                                                 {% endif %}
-
-
-                                                </button>
+                                            </button>
                                                 <div class="ml-1 text-gray-400 font-thin text-ms"> {{ post.likes.count }} </div>
                                            
                                         </div>
                                        
-
-                                     
-                                       
-                                   
 
 
                                         <div class='flex text-gray-700 font-normal text-sm rounded-md mb-2 mr-4 items-center'>
@@ -156,9 +197,6 @@
                                         </div>
 
                                     </div>
-
-
-
 
                                     <div class="mt-3 mx-5 w-full flex justify-end">
                                         <div class='flex text-gray-700 font-normal text-sm rounded-md mb-2  items-center'>
@@ -175,28 +213,28 @@
                             
                             </div>
                         </div>
-                    </div>
+                    
                     {% endfor %}  
-                </div>
+                
               
 
 
-{# -----------------------END---Post Container-------------------------------  #}
+
 
 {# --------------------------Paginate Section-------------------------------  #}
 <div class="flex justify-center">
     {% if is_paginated %}
     <ul class="flex pl-0 list-none rounded my-2">
         {% if page_obj.has_previous %}
+        
         <li class="relative block py-3 px-3 leading-tight bg-white border border-gray-300 text-blue-700 border-r-0 ml-0 rounded-l hover:bg-gray-200">
-            <a class="text-cyan-500" href="?page=1">First
-
-            </a></li>
+            <a class="text-cyan-500" href="?page=1">First</a>
+        </li>
            
-            <li class="relative block py-3  px-3 leading-tight bg-white border border-gray-300 text-blue-700 border-r-0 hover:bg-gray-200">
+         <li class="relative block py-3  px-3 leading-tight bg-white border border-gray-300 text-blue-700 border-r-0 hover:bg-gray-200">
                 <a class="text-cyan-500"  href="?page={{ page_obj.previous_page_number }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8899a4" stroke-width="2" stroke-linecap="round" stroke-linejoin="arcs"><path d="M15 18l-6-6 6-6"></path></svg>
-                </a></li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8899a4" stroke-width="2" stroke-linecap="round" stroke-linejoin="arcs"><path d="M15 18l-6-6 6-6"></path></svg></a>
+        </li>
             
         {% endif %}
         {% for num in page_obj.paginator.page_range %}
@@ -222,6 +260,7 @@
     </ul>
     {% endif %}
 </div>
+
 {# ------------------------END--Paginate Section-------------------------------  #}
 {% endblock content %}
 

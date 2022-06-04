@@ -116,9 +116,9 @@ WSGI_APPLICATION = 'Jba.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'jobbook',
-        'USER': 'jobuser',
-        'PASSWORD': 'job',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASS'),
         'HOST': 'localhost'
     }
 }
@@ -170,20 +170,15 @@ LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 
 #SMTP Configuration
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_USE_TLS = True
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'adify.ericbaw@gmail.com'
-# EMAIL_HOST_PASSWORD = '13991385'
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = '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'
-DEFAULT_FROM_EMAIL = 'adify.ericbaw@gmail.com'
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 
 
 PAYPAL_RECEIVER_EMAIL = 'ericbaw@247ericpointcom.site'
@@ -193,10 +188,7 @@ PAYPAL_TEST = False
 CART_SESSION_ID = 'cart'
 
 
-#SENDGRID_API_KEY = env('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')
 
-#EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-#SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
 
 # Toggle sandbox mode (when running in DEBUG mode)
 SENDGRID_SANDBOX_MODE_IN_DEBUG=False
