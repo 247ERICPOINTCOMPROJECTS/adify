@@ -3,13 +3,14 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
 from .validators import file_size
-
+from ckeditor.fields import RichTextField
 
 
 class Post(models.Model):
     title = models.CharField(max_length=100, blank=False, default='New Post')
     price = models.FloatField("post price", default='15')
-    description = models.TextField(max_length=255, blank=False)
+    description = RichTextField(blank=True,max_length=255)
+    # description = models.TextField(max_length=255, blank=False)
     pic = models.ImageField(upload_to='path/to/img', blank=True)
     video = models.FileField(upload_to='videos/', validators=[file_size], blank=True)
     date_posted = models.DateTimeField(default=timezone.now)

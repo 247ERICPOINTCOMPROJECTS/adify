@@ -31,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3lq-s!_@wju0tr&y5q!xjrd$q=&3f2sh$uk@0d535a5m$6tilq'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -62,15 +62,38 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'django_browser_reload',
+    
     'widget_tweaks',
+    'ckeditor',
+    
 
 
 ]
+
 
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+##  CKEDITOR CONFIGURATION ##
+CKEDITOR_CONFIGS = {
+    'default': {
+        'width': 630,
+        'height': 150,
+        'toolbar': 'Custom',
+       
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['Font', 'FontSize','TextColor', 'BGColor'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            
+            
+        ],
+    
+    },
+}
+
+ ####################################
 NPM_BIN_PATH = '/usr/local/bin/npm'
 MIDDLEWARE = [
 
@@ -170,8 +193,6 @@ LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 
 #SMTP Configuration
-
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_USE_TLS = True

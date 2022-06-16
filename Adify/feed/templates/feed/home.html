@@ -35,8 +35,7 @@
 {% endblock aside %} 
 
 {% block side %} 
-<div
-			class="row-span-3 lg:visible md:flex  sm:hidden  xs:hidden border border-gray-100 bg-purple-100   transition-shadow shadow-xl hover:shadow-xl ">
+<div class="row-span-3 lg:visible md:flex  sm:hidden  xs:hidden border border-gray-100 bg-purple-100   transition-shadow shadow-xl hover:shadow-xl ">
 			
 			
 				left
@@ -44,29 +43,44 @@
 			
 			</div>
 {% endblock side %}
+
 {% block form %}
-<div class="flex justify-center align-center mx-2   my-10   col-span-2  px-2  ">
+<div class="flex justify-center align-center mx-1   my-5   col-span-2  px-2  ">
 <div class="w-full max-w-xl">
-    <form class="bg-white shadow rounded-lg mb-5 p-4">
-        <textarea name="message" placeholder="Type something..." class=" w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"></textarea>
-        <footer class="flex justify-between mt-2">
-            <div class="flex gap-2">
-                <span class="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+   
+    <div class="bg-white shadow rounded-sm  p-3">
+        <div class="flex items-center p-0 ">
+            
+            <div class="w-auto h-auto mr-2 ">
+                <a href="{{ posts.user_name.profile.get_absolute_url }}">
+                <img class='w-12 h-10 object-cover rounded-lg shadow cursor-pointer' alt='User avatar' src="{{ request.user.profile.image.url }}"></a>
+            </div>
+            <div class="w-full "> 
+                <a href="{% url 'post-create' %}">
+        <button  class="h-full px-2 text-left w-full rounded-lg p-2  bg-gray-100 inline-block  text-gray-400"><span class="text-sm "> click here to add a post<span></button>
+        </a>
+        </div>
+        </div>
+        
+        <footer class="mt-2">
+            <div class="flex justify-evenly content-center">
+                <span class="flex items-center  w-fit h-8 px-2 rounded-full text-gray-400 cursor-pointer">
+                    <img src="https://res.cloudinary.com/dvukj9sqf/image/upload/v1654558589/Shape_wm2fkx.png" width="18" height="20"  class="css-i6dzq1"/>
+                    <p class="mx-3 text-xs">Picture </p>
                 </span>
-                <span class="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span class="flex items-center  w-fit h-8 px-2 rounded-full text-gray-400 cursor-pointer">
+                    <img src="https://res.cloudinary.com/dvukj9sqf/image/upload/v1654558665/Shape_fdpjsq.png" width="18" height="20"   class="css-i6dzq1"/>
+                    <p class="mx-3 text-xs">Video </p>
                 </span>
-                <span class="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                <span class="flex items-center  w-fit h-8 px-2 rounded-full text-gray-400 cursor-pointer">
+                    <img src="https://res.cloudinary.com/dvukj9sqf/image/upload/v1654558620/Shape_cofkth.png" width="18" height="20"  class="css-i6dzq1"/>
+                    <p class="mx-3 text-xs">Products </p>
                 </span>
             </div>
-            <button class="flex items-center py-2 px-4 rounded-lg text-sm bg-blue-500 text-white shadow-lg">Send 
-               <svg class="ml-1" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg> 
-            </button>
         </footer>
-    </form>
 
+    </div>
+  
 </div>
 </div>
      {% endblock form %} 
@@ -77,17 +91,17 @@
 
 
 
-{% block content %}
+{% block post %}
 
 {# --------------------------Post Container-------------------------------  #}
               
                 {% for post in posts %}
-                    <div class='flex   max-w-xl my-10 bg-white shadow-md rounded-lg overflow-hidden mx-auto '>
+                    <div class='flex  max-w-xl my-10 bg-white shadow-md rounded-lg overflow-hidden mx-auto '>
                             <div class='w-full'>
 
                                 <div class="flex flex-row mt-2 px-2 py-3 mx-3">
                             
-                                    <div class="w-auto h-auto rounded-md border-2 border-cyan-500">
+                                    <div class="w-auto h-auto rounded-md">
                                         <a href="{{ post.user_name.profile.get_absolute_url }}">
                                         <img class='w-12 h-12 object-cover rounded-md shadow cursor-pointer' alt='User avatar' src="{{ post.user_name.profile.image.url }}"></a>
                                     </div>
@@ -107,7 +121,7 @@
 
                                 <div class="border-b border-gray-100"></div> 
                                 <div class='text-gray-600 font-semibold text-lg mb-3 mt-3 mx-3 px-2 capitalize'>{{ post.title }}</div>
-                                <div class='text-gray-500 font-thin text-sm mb-6 mx-3 px-2 capitalize'>{{ post.description }}</div>
+                                <div class='text-gray-500 font-thin text-sm mb-6 mx-3 px-2 capitalize'>{{ post.description|safe }}</div>
                                 
                                 <div x-data="{ tab: 'img' }" class='text-gray-400 font-medium text-sm mb-2 mt-6 mx-3 px-2'>
                                     <a href="{% url 'post-detail' post.id %}">
@@ -262,7 +276,7 @@
 </div>
 
 {# ------------------------END--Paginate Section-------------------------------  #}
-{% endblock content %}
+{% endblock post %}
 
 {% block jsfiles %}
     <script>

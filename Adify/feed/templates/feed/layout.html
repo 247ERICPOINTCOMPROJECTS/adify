@@ -209,18 +209,41 @@
 
     {% endblock %}
 
-    <div
-      class="content-center grid-flow-row auto-rows-max justify-center grid grid-cols-4 lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-1  xs:grid-cols-1 place-content-center gap-1"
-    >
+
+
+
+
+
+
+
+    {% block content %} 
+
+   <div {% if user.is_authenticated %} class=" grid-flow-row auto-rows-max justify-center grid grid-cols-4 lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-1  xs:grid-cols-1  gap-1" {% endif %} >
     
-      {% if user.is_authenticated %} {% block side %} {% endblock side %} {% endif %} 
-      {% if user.is_authenticated %} {% block form %} {% endblock form%} {% endif %}
-      {% if user.is_authenticated %} {% block aside %} {% endblock aside %} {% endif %}
-      <div class="col-span-2 ">
-       {% block content %} {% endblock content %} 
+      {% if user.is_authenticated %} 
+      {% block side %} {% endblock side %} 
+       {% block form %} {% endblock form%} 
+       {% block aside %} {% endblock aside %}
+        {% endif %}
+
+      <div class="col-span-2 w-full  col-start-2 flex flex-col  bg-blue-200 place-self-center">
+        
+       {% block post %} {% endblock post %} 
+       
       </div>
+
    </div>
-      
+   {% endblock content %} 
+
+
+
+
+
+
+
+
+
+
 
     <footer>
       <div class="mt-20">
@@ -270,6 +293,8 @@
       src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
       defer
     ></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

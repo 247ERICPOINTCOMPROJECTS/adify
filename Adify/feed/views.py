@@ -10,6 +10,7 @@ from .forms import NewCommentForm, NewPostForm
 from django.views.generic import ListView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Post, Comments, Like
+from users.models import Profile
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 import json
@@ -29,6 +30,7 @@ class PostListView(ListView):
 	paginate_by = 10
 	def get_context_data(self, **kwargs):
 		context = super(PostListView, self).get_context_data(**kwargs)
+		context['profile'] = Profile.objects.all()
 		if self.request.user.is_authenticated:
 			liked = [i for i in Post.objects.all() if Like.objects.filter(user = self.request.user, post=i)]
 			context['liked_post'] = liked
