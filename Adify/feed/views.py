@@ -75,6 +75,7 @@ def post_detail(request, pk):
 @login_required
 def create_post(request):
 	user = request.user
+	# common_tags = Post.tags[:4]
 	if request.method == "POST":
 		form = NewPostForm(request.POST, request.FILES)
 		if form.is_valid():
@@ -82,11 +83,13 @@ def create_post(request):
 			data.user_name = user
 			data.save()
 			messages.success(request, f'Posted Successfully')
+			# redirect to page with modal that say sucess pay 
 			return redirect('posts-create')
 	else:
 		form = NewPostForm()
 	return render(request, 'feed/create_post.html', {'form':form})
 
+# Update/ Edit  a post 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	model = Post
 	fields = ['title', 'description', 'pic', 'video', 'category', 'targetlocation', 'tags']
@@ -102,7 +105,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 			return True
 		return False
 
-
+# message alert 
 @login_required
 def create_posts(request):
 	user = request.user

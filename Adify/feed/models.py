@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.utils import timezone
 from .validators import file_size
 from ckeditor.fields import RichTextField
-
+from tagify.models import TagField
 
 class Post(models.Model):
     title = models.CharField(max_length=100, blank=False, default='New Post')
@@ -15,7 +15,8 @@ class Post(models.Model):
     video = models.FileField(upload_to='videos/', validators=[file_size], blank=True)
     date_posted = models.DateTimeField(default=timezone.now)
     user_name = models.ForeignKey(User, on_delete=models.CASCADE)
-    tags = models.CharField(max_length=100, blank=True)
+    tags = TagField(verbose_name='tags',max_length=100, blank=False,default='Other')
+    # tags = models.CharField(max_length=100, blank=True)
     category = models.CharField(max_length=255, blank=False, default='Other')
     targetlocation = models.CharField(max_length=255, blank=False, default='Other')
 

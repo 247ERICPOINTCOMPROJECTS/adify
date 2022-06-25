@@ -65,16 +65,19 @@ INSTALLED_APPS = [
     
     'widget_tweaks',
     'ckeditor',
-    
+    'tagify',
 
 
 ]
 
-
+##  TAILWIND CSS CONFIGURATION ##
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+NPM_BIN_PATH = '/usr/local/bin/npm'
+ ####################################
+
 ##  CKEDITOR CONFIGURATION ##
 CKEDITOR_CONFIGS = {
     'default': {
@@ -94,7 +97,7 @@ CKEDITOR_CONFIGS = {
 }
 
  ####################################
-NPM_BIN_PATH = '/usr/local/bin/npm'
+
 MIDDLEWARE = [
 
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -201,9 +204,12 @@ EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 
-
+##  PAYPAL CONFIGURATION ##
+# the email used to create the PayPal account
 PAYPAL_RECEIVER_EMAIL = 'ericbaw@247ericpointcom.site'
-PAYPAL_TEST = False
+# is a boolean value sandbox account is used to test things
+PAYPAL_TEST = True
+ ####################################
 
 # session settings
 CART_SESSION_ID = 'cart'
