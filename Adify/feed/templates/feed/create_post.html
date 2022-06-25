@@ -71,14 +71,60 @@
                 <div  class="flex justify-start text-lg text-cyan-500"><h2>$29.00</h2></div>
             </div>  
 
-     
 
-              <div class="md:col-span-5 text-right">
+
+           <div class="md:col-span-5 text-right mt-5">
                 <div class="inline-flex items-end">
-                  <button type="submit"class="bg-cyan-400 mt-5 hover:bg-blue-700 text-white font-bold py-2 px-14 rounded-xl">Post & Pay </button>
+                  <div id="paypal-button-container-P-1N273155E86601137MDO2KQA"></div>
                 </div>
-              </div>
+              </div> 
+
+
+
+              <script src="https://www.paypal.com/sdk/js?client-id=AUsbaXnO5yOWjn0S8uT-2CBqtRUhd1E2Hal7XtRM9Vs2tjxN7VxkqVeP7dKWyKc6mOLJ4LQgdhOvtB9j&vault=true&intent=subscription"
+                      data-sdk-integration-source="button-factory"></script>
+              <script>
+                  paypal.Buttons({
+                      style: {
+                          shape: 'pill',
+                          height: 45,
+                          color: 'blue',
+                          layout: 'horizontal',
+                          label: 'paypal',
+                          tagline: 'true',
+                      },
+                      createSubscription: function (data, actions) {
+                          return actions.subscription.create({
+                              /* Creates the subscription */
+                              plan_id: 'P-1N273155E86601137MDO2KQA'
+                          });
+                      },
+                      onApprove: function (data, actions) {
+                          alert(data.subscriptionID); // You can add optional success message for the subscriber here
+                          window.alert('Thank you for your payment, continue and submit you ad now!');
+                          location.href = '{% url 'posts-create' %}';
+                      },
+                      onError: function (err) {
+                          // Show an error page here, when an error occurs
+                          //  window.location.href = "/your-error-page-here";
+                          window.alert('An Error Occured!');
+                          location.href = '{% url 'home' %}';
+  
+                      },
+                      onCancel: function (data, actions) {
+                          // Show a cancel page or return to cart
+                          window.alert('Your Payment Was Cancelled!');
+                          location.href = '{% url 'home' %}';
+                      },
+  
+                  }).render('#paypal-button-container-P-1N273155E86601137MDO2KQA'); // Renders the PayPal button
+              </script>
        
+
+
+
+
+
             </div>
           </div>
     
