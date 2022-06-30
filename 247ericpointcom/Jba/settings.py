@@ -55,14 +55,11 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'feed.apps.FeedConfig',
     'crispy_forms',
-
     'paypal.standard.ipn',
     'sorl.thumbnail',
-    
     'tailwind',
     'theme',
     'django_browser_reload',
-    
     'widget_tweaks',
     'ckeditor',
     'tagify',
