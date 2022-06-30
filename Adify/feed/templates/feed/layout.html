@@ -1,0 +1,303 @@
+{% load static%}{% load tailwind_tags %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <style>
+      [x-cloak] {
+        display: none !important;
+      }
+    </style>
+
+    <script
+      type="text/javascript"
+      src="https://platform-api.sharethis.com/js/sharethis.js#property=60ec5a89baf861001984cc3b&product=inline-follow-buttons"
+      async="async"
+    ></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Ensures optimal rendering on mobile devices. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Optimal Internet Explorer compatibility -->
+    {% tailwind_css %}
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
+    {% block cssfiles %}{% endblock cssfiles %}
+    <title>JOBBOOKADS</title>
+  </head>
+  {# --------------------------header------------------------------- #}
+
+  <body style="background-color: #f9f9f9">
+    {% block navbar %}
+    {#--------------------------Navbar------------------------------- #}
+    <nav class="px-2 sm:px-4 py-6 mb-10 bg-white drop-shadow-lg">
+      <div
+        class="container flex flex-wrap justify-between items-center mx-auto"
+      >
+        {# --------------------------Logo------------------------------- #}
+
+        <a
+          class="flex text-2xl text-gray-800 font-semibold leading-7 uppercase"
+          href="{% url 'home' %}"
+        >
+          <img
+            class="w-20 mr-5 ml-4"
+            width="30px"
+            height="40px"
+            src="https://res.cloudinary.com/dvukj9sqf/image/upload/v1651106793/WhatsApp_Image_2022-04-20_at_11.07.38_PM__1_-removebg-preview_cilzl9.png"
+            alt=""
+          />
+          <h4 class="my-auto">247ericpointcom</h4>
+        </a>
+
+        {% if user.is_authenticated %}
+        <div class="flex md:order-2 justify-between">
+          <ul class="flex justify-between">
+            <div
+              class="flex bg-slate-100 items-center py-1.5 rounded-full px-3 mx-2"
+            >
+              <li>
+                <a href="{% url 'my_profile' %}">
+                  <img
+                    class=""
+                    src="https://res.cloudinary.com/dvukj9sqf/image/upload/v1651109625/Vector_tkzc5o.svg"
+                  />
+                </a>
+              </li>
+            </div>
+
+            <div
+              class="flex bg-slate-100 items-center py-1.5 rounded-full px-3 mx-2"
+            >
+              <li>
+                <a href="{% url 'my_profile' %}">
+                  <img
+                    class=""
+                    src="https://res.cloudinary.com/dvukj9sqf/image/upload/v1651109257/Vector_ap3wlr.svg"
+                  />
+                </a>
+              </li>
+            </div>
+
+            <div
+              x-data="{ dropdownOpen: false }"
+              class="relative flex items-center bg-slate-100 py-1.5 rounded-full px-5 mx-2"
+            >
+              <li class="flex items-center">
+                <a class="flex cursor-pointer" href="{% url 'my_profile' %}">
+                  <svg
+                    width="20px"
+                    height="19px"
+                    class="mr-2"
+                    color="4FC9DF"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g id="Iconly/Curved/Profile">
+                      <g id="Profile">
+                        <path
+                          color="#4FC9DF"
+                          id="Stroke 1"
+                          fill="#4FC9DF"
+                          clip-rule="evenodd"
+                          d="M11.8445 21.6618C8.15273 21.6618 5 21.0873 5 18.7865C5 16.4858 8.13273 14.3618 11.8445 14.3618C15.5364 14.3618 18.6891 16.4652 18.6891 18.766C18.6891 21.0658 15.5564 21.6618 11.8445 21.6618Z"
+                          stroke="#4FC9DF"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          id="Stroke 3"
+                          fill="#4FC9DF"
+                          clip-rule="evenodd"
+                          d="M11.8372 11.1735C14.26 11.1735 16.2236 9.2099 16.2236 6.78718C16.2236 4.36445 14.26 2.3999 11.8372 2.3999C9.41452 2.3999 7.44998 4.36445 7.44998 6.78718C7.4418 9.20172 9.3918 11.1654 11.8063 11.1735C11.8172 11.1735 11.8272 11.1735 11.8372 11.1735Z"
+                          stroke="#4FC9DF"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </g>
+                    </g>
+                  </svg>
+                  {{user.username}}
+                </a>
+
+                <button
+                  @click="dropdownOpen = !dropdownOpen"
+                  class="relative flex block rounded-md p-1 focus:outline-none"
+                >
+                  <svg
+                    class="h-5 w-5 text-gray-800"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </button>
+              </li>
+              <div
+                x-transition.opacity
+                x-show="dropdownOpen"
+                @click="dropdownOpen = false"
+                class="fixed inset-0 h-full w-full z-10"
+              ></div>
+              <div
+                x-cloak
+                x-show="dropdownOpen"
+                class="absolute right-0 top-10 py-2 w-48 bg-white rounded-md shadow-xl z-20"
+              >
+                <a
+                  href="{% url 'my_profile' %}"
+                  class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white"
+                >
+                  My profile
+                </a>
+                <a
+                  href="{% url 'logout' %}"
+                  class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white"
+                >
+                  Log out
+                </a>
+              </div>
+            </div>
+          </ul>
+        </div>
+
+        {% else %}
+        <div class="flex md:order-2 justify-between">
+          <ul class="flex justify-between">
+            <div class="flex items-center py-1.5 rounded-full px-3 mx-2">
+              <li>
+                New User ?
+                <a class="text-cyan-500" href="{% url 'register' %}">
+                  Create an account
+                </a>
+              </li>
+            </div>
+
+            <div class="flex items-center py-1.5 rounded-full px-3 mx-2">
+              <li>
+                <a class="text-cyan-500" href="{% url 'login' %}"> Login </a>
+              </li>
+            </div>
+          </ul>
+        </div>
+        {% endif %}
+
+        <div
+          class="hidden justify-between items-center w-full md:flex md:w-auto md:order-1"
+        >
+          {% block searchform %}{% endblock searchform %}
+        </div>
+      </div>
+    </nav>
+
+    {% endblock %}
+
+
+
+
+
+
+
+
+    {% block content %} 
+
+   <div {% if user.is_authenticated %} class=" grid-flow-row overflow-hidden  auto-rows-max  grid grid-cols-4 justify-center lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-1  xs:grid-cols-1  gap-1" {% endif %} >
+    
+      {% if user.is_authenticated %} 
+      {% block side %} {% endblock side %} 
+       {% block form %} {% endblock form%} 
+       {% block aside %} {% endblock aside %}
+        {% endif %}
+
+      <div class="col-span-2  h-full w-full col-start-2 lg:col-start-2 md:col-start-2 sm:col-start-2">
+        
+       {% block post %} {% endblock post %} 
+        
+      </div>
+
+   </div>
+   {% endblock content %} 
+
+
+
+
+
+
+
+
+
+
+
+    <footer>
+      <div class="mt-20">
+        <hr class="border-gray-300 mx-auto max-w-2xl my-2" />
+        <div class="flex justify-center p-3">
+          <a
+            class="flex mb-5 text-2xl text-gray-800 font-semibold leading-7 uppercase"
+            href="{% url 'home' %}"
+          >
+            <img
+              class="mr-5 ml-4"
+              width="55px"
+              height="65px"
+              src="https://res.cloudinary.com/dvukj9sqf/image/upload/v1651106793/WhatsApp_Image_2022-04-20_at_11.07.38_PM__1_-removebg-preview_cilzl9.png"
+              alt=""
+            />
+            <h4 class="my-auto text-xl">247ericpointcom</h4>
+          </a>
+        </div>
+        <div class="flex justify-around p-6 mb-7">
+          <div
+            class="grid text-center text-gray-500 gap-2 gap-x-2 justify-around grid-cols-8 divide-x"
+          >
+            <div class="">ABOUT</div>
+            <div class="col-span-2">AGREEMENT</div>
+            <div class="col-span-2">CONDITIONS</div>
+            <div class="col-span-2">PRIVACY POLICY</div>
+            <div class="">HELP</div>
+          </div>
+        </div>
+
+        <hr class="border-gray-300 mx-17" />
+        <div class="flex justify-around">
+          <p class="w-full text-center my-12 text-gray-600">
+            Copyright © 2020 All Rights Resserved by
+            <a class="text-cyan-500">247ericpointcom</a>
+          </p>
+          <p class="w-full text-center my-12 text-gray-600">
+            WE ACCEPT ALL POPULAR PAYMENT METHODS
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JS Files -->
+    <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+      defer
+    ></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    {% block jsfiles %}{% endblock jsfiles %}
+  </body>
+</html>

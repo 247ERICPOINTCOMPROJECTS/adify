@@ -1,0 +1,373 @@
+{% extends "feed/layout.html" %} {% load static %} 
+
+{% block searchform %}
+{# --------------------------Search Form-------------------------------  #}
+
+
+    <form
+            class="form-inline my-2 my-lg-0 ml-5"
+            action="{% url 'search_posts' %}"
+            method="get"
+            enctype="multipart/form-data">
+            <div class="relative text-gray-600 focus-within:text-gray-400">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                  </button>
+                </span>
+                <input type="search" name="q" class="py-2 text-sm text-white border-transparent bg-slate-100 lg:w-96 md:w-60  h-11 rounded-xl pl-10 " placeholder="Search..." autocomplete="off">
+              </div>
+    </form>
+
+    {% endblock searchform %} 
+{# --------------------------End---Search Form----------------------  #}
+
+
+ {% block aside %} 
+ <div class="row-span-2 lg:visible md:flex   sm:hidden  xs:hidden  ">
+ 
+    <aside class="">
+    
+         <div class="bg-white shadow rounded-lg  px-8 py-12 mt-4">
+             <div class="flex flex-col gap-1 text-center items-center">
+        
+                <img class="h-32 w-32 p-2 rounded-lg  mb-4" src="{{ request.user.profile.image.url }}" alt="">
+                <p class="font-semibold capitalize">{{ request.user }}</p>
+                 {% if request.user.profile.location %}
+                <div class="text-sm leading-normal text-gray-400 flex justify-center items-center">
+                     <svg viewBox="0 0 24 24" class="mr-1" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                     {{ request.user.profile.location }}
+                </div>
+                    {% endif %}
+            </div> 
+
+        <div class="flex justify-evenly items-center gap-2 my-5">
+            <div class="font-semibold text-center mx-4">
+                <p class="text-black">{{ request.user.profile.friends.count }}</p>
+                <span class="text-gray-400">Posts</span>
+            </div>
+            <div class="font-semibold text-center mx-4">
+                <p class="text-black">{{ post_count.count }}</p>
+                <span class="text-gray-400">Clients</span>
+            </div>
+        </div>
+
+         <div class="flex justify-evenly items-center gap-2 my-5">
+            <div class="font-semibold text-center mx-4">
+                <button type="submit"class="bg-slate-200 mt-5 hover:bg-slate-300 text-black text-sm py-2 px-4 rounded"><a href="{% url 'my_profile' %}">Profile</a></button>
+               
+            </div>
+
+            <div class="font-semibold text-center mx-4">
+                <button type="submit"class="bg-slate-200 mt-5 hover:bg-slate-300 text-black text-sm py-2 px-6 rounded"><a href="{% url 'edit_profile' %}">Edit</a></button>
+                
+            </div>
+
+         </div>
+
+     
+
+    </aside>
+     
+ </div>
+{% endblock aside %} 
+
+{% block side %} 
+<div class="row-span-3 lg:visible md:flex  sm:hidden  xs:hidden ">
+    <aside class="px-8">
+    
+        <div class="bg-white shadow rounded-lg px-8 py-8 mt-4">
+            <div class="ml-4 my-4">
+                <span class="font-medium text-lg leading-4">My Clients ( {{ request.user.profile.friends.count }} )</span>
+            </div>
+
+            {% for friends in request.user.profile.friends.all %}
+                <div class=" flex flex-col cursor-pointer  p-4 duration-300  sm:flex-row sm:py-4 sm:px-8 hover:bg-[#f6f8f9]">
+                    <div class="flex justify-between items-center text-center flex-row sm:flex-row sm:text-left">
+                    
+                        <div class=" mb-2.5 sm:mb-0 sm:mr-2.5">
+                            <img class='w-12 h-12 object-cover rounded-md shadow cursor-pointer' src="{{friends.image.url}}"/>
+                        </div>
+
+                        <div class=" flex flex-col mb-4 sm:mb-0 sm:mr-4">
+                            <a href="#" class="title font-medium no-underline">{{friends.user}}</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            {% endfor %}
+            <!--Button content -->
+
+        </div>
+   </aside>
+</div>
+{% endblock side %}
+
+{% block form %}
+<div class="flex justify-center align-center mx-1 w-full my-5 col-start-2  col-span-2 sm:col-start-2 lg:col-start-2 md:col-start-2 px-2  ">
+<div class="w-full max-w-xl">
+   
+    <div class="bg-white shadow rounded-sm  p-3">
+        <div class="flex items-center p-0 ">
+            
+            <div class="w-auto h-auto mr-2 ">
+                <a href="{{ posts.user_name.profile.get_absolute_url }}">
+                <img class='w-12 h-10 object-cover rounded-lg shadow cursor-pointer' alt='User avatar' src="{{ request.user.profile.image.url }}"></a>
+            </div>
+            <div class="w-full "> 
+                <a href="{% url 'post-create' %}">
+        <button  class="h-full px-2 text-left w-full rounded-lg p-2  bg-gray-100 inline-block  text-gray-400"><span class="text-sm "> click here to add a post<span></button>
+        </a>
+        </div>
+        </div>
+        
+        <footer class="mt-2">
+            <div class="flex justify-evenly content-center">
+                <span class="flex items-center  w-fit h-8 px-2 rounded-full text-gray-400 cursor-pointer">
+                    <img src="https://res.cloudinary.com/dvukj9sqf/image/upload/v1654558589/Shape_wm2fkx.png" width="18" height="20"  class="css-i6dzq1"/>
+                    <p class="mx-3 text-xs">Picture </p>
+                </span>
+                <span class="flex items-center  w-fit h-8 px-2 rounded-full text-gray-400 cursor-pointer">
+                    <img src="https://res.cloudinary.com/dvukj9sqf/image/upload/v1654558665/Shape_fdpjsq.png" width="18" height="20"   class="css-i6dzq1"/>
+                    <p class="mx-3 text-xs">Video </p>
+                </span>
+                <span class="flex items-center  w-fit h-8 px-2 rounded-full text-gray-400 cursor-pointer">
+                    <img src="https://res.cloudinary.com/dvukj9sqf/image/upload/v1654558620/Shape_cofkth.png" width="18" height="20"  class="css-i6dzq1"/>
+                    <p class="mx-3 text-xs">Products </p>
+                </span>
+            </div>
+        </footer>
+
+    </div>
+  
+</div>
+</div>
+     {% endblock form %} 
+     
+     
+
+
+
+
+
+{% block post %}
+
+{# --------------------------Post Container-------------------------------  #}
+
+                {% for post in posts %}
+                
+                    <div class='max-w-xl my-10 bg-white shadow-md rounded-lg mx-auto '>
+                            <div class='w-full'>
+
+                                <div class="flex flex-row mt-2 px-2 py-3 mx-3">
+                            
+                                    <div class="w-auto h-auto rounded-md">
+                                        <a href="{{ post.user_name.profile.get_absolute_url }}">
+                                        <img class='w-12 h-12 object-cover rounded-md shadow cursor-pointer' alt='User avatar' src="{{ post.user_name.profile.image.url }}"></a>
+                                    </div>
+                                    
+                                    <div class="flex flex-col leading-7 mb-2 ml-4 mt-1">
+                                        <div class='text-gray-600 text-sm font-semibold capitalize'><a  href="{{ post.user_name.profile.get_absolute_url }}">
+                                            {{ post.user_name }}</a>
+                                        </div>
+
+                                        <div class='flex w-full mt-1.5 '>
+                                            <div class="text-gray-400 font-thin text-xs">
+                                                Posted on {{ post.date_posted|date:"D d M Y" }}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                   
+                                </div>
+
+                                <div class="border-b border-gray-100"></div> 
+                                <div class='text-gray-600 font-semibold text-lg mb-3 mt-3 mx-3 px-2 capitalize'>{{ post.title }}</div>
+                                <div class='text-gray-500 font-thin text-sm mb-6 mx-3 px-2 capitalize'>{{ post.description|safe }}</div>
+                                
+                                <div x-data="{ tab: 'img' }" class='text-gray-400 font-medium text-sm mb-2 mt-6 mx-3 px-2'>
+                                    <a href="{% url 'post-detail' post.id %}">
+                                    <img x-show="tab === 'img'" class="rounded w-[536px] h-[302px]" {% if post.pic %}  src="{{ post.pic.url }}" {% else %} src="{% static 'path/to/img' %}" {% endif %} />
+                                    <video x-cloak x-show="tab === 'vid'" class="rounded w-[536px] h-[302px]" controls="controls"{% if post.video %} src="{{ post.video.url }}" {% else %} src="{% static 'video' %}" {% endif %} type="video/mp4"></video>
+                                    </a>
+                                    <div class='flex justify-center'>
+                                      <button class="mt-2 mx-2 p-1 w-2 h-2 rounded-full bg-slate-400  hover:bg-cyan-500  active:cyan-500 focus:ring-1 focus:ring focus:ring-cyan-500  focus:bg-cyan-500" :class="{ 'active:cyan-500': tab === 'img' }" @click="tab = 'img'"></button>
+                                      <button class="mt-2 mx-2 p-1 w-2 h-2 rounded-full bg-slate-400 hover:bg-cyan-500  active:cyan-500 focus:ring-1 focus:ring focus:ring-cyan-500  focus:bg-cyan-500" :class="{ 'active:cyan-500': tab === 'vid' }" @click="tab = 'vid'"></button>
+                                    </div>
+                                </div>
+
+
+                                <div class="flex flex-row justify-start mb-4">
+                                    <div class="flex flex-row  pt-2 pl-5">
+                                        {% if post.tags %}
+                                        {% for tag in post.tags %}
+                                        <span class="flex flex-row  items-center w-fit h-8 px-2 py-2 text-center rounded  cursor-pointer mr-2   border ">
+                                            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                <rect width="15" height="15" fill="url(#pattern0)"/>
+                                                <defs>
+                                                <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+                                                <use xlink:href="#image0_21_605" transform="scale(0.00195312)"/>
+                                                </pattern>
+                                                <image id="image0_21_605" width="512" height="512" xlink:href="data:image/png;base64,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"/>
+                                                </defs>
+                                                </svg>
+                                               
+                                                
+                                           <span class="ml-2 capitalize">{{ tag }}</span>
+                                             
+                                        </span>
+                                        {% endfor %}
+                                        <span class="flex flex-row  items-center  h-8 px-2 py-2 text-center rounded  cursor-pointer mr-2  border">
+                                            <svg width="19px" height="19px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M3 6.5C3 3.87479 3.02811 3 6.5 3C9.97189 3 10 3.87479 10 6.5C10 9.12521 10.0111 10 6.5 10C2.98893 10 3 9.12521 3 6.5Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path opacity="0.4" fill-rule="evenodd" clip-rule="evenodd" d="M14 6.5C14 3.87479 14.0281 3 17.5 3C20.9719 3 21 3.87479 21 6.5C21 9.12521 21.0111 10 17.5 10C13.9889 10 14 9.12521 14 6.5Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M3 17.5C3 14.8748 3.02811 14 6.5 14C9.97189 14 10 14.8748 10 17.5C10 20.1252 10.0111 21 6.5 21C2.98893 21 3 20.1252 3 17.5Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M14 17.5C14 14.8748 14.0281 14 17.5 14C20.9719 14 21 14.8748 21 17.5C21 20.1252 21.0111 21 17.5 21C13.9889 21 14 20.1252 14 17.5Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                           <span class="ml-2 capitalize"> {{ post.category }}</span>
+                                        </span>
+
+                                        <span class="flex flex-row  items-center  h-8 px-2 py-2 text-center rounded  cursor-pointer mr-2  border">
+                                           <svg width="20px" height="20px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(4 2)"><path d="m6.5 16.5407715.6311176-.7118691c.71585099-.8191184 1.36011688-1.5983525 1.93279767-2.3377022l.4733382-.6239608c1.97516433-2.6615039 2.96274653-4.77276704 2.96274653-6.33378943 0-3.33218241-2.6862915-6.03344997-6-6.03344997s-6 2.70126756-6 6.03344997c0 1.56102239.98758218 3.67228553 2.96274653 6.33378943l.4733382.6239608c.73630387.9505925 1.5909423 1.9671163 2.56391527 3.0495713z"/><circle cx="6.5" cy="6.5" r="2.5"/></g></svg>
+                                           <span class="ml-2 capitalize"> {{ post.targetlocation }}</span>
+                                        </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+
+                                <div class="border-b border-gray-100"></div> 
+                        
+                                <div class="flex w-full border-t border-gray-100">
+
+                                    <div x-data="{isLiked: false}" class="mt-3 mx-5 flex flex-row content-center">
+
+                                        <div class='flex text-gray-700 font-normal text-sm rounded-md mb-2 mr-4 items-center' >
+                                            <button @click="isLiked = !isLiked" class="btn  like" id="{{ post.id }}">
+                                             {% if post in liked_post %} 
+
+                                             <a href="{% url 'post-like' %}"  id="likebtn{{ post.id }}">
+                                               <svg x-if="!isLiked" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path     fill="#E23939"    d="M6.2798 0.500643C6.9098 0.519803 7.5198 0.629803 8.1108 0.830803H8.1698C8.2098 0.849803 8.2398 0.870803 8.2598 0.889803C8.4808 0.960803 8.6898 1.0408 8.8898 1.1508L9.2698 1.3208C9.4198 1.4008 9.5998 1.5498 9.6998 1.6108C9.7998 1.6698 9.9098 1.7308 9.9998 1.7998C11.1108 0.950803 12.4598 0.490803 13.8498 0.500643C14.4808 0.500643 15.1108 0.589803 15.7098 0.790803C19.4008 1.9908 20.7308 6.0408 19.6198 9.5808C18.9898 11.3898 17.9598 13.0408 16.6108 14.3898C14.6798 16.2598 12.5608 17.9198 10.2798 19.3498L10.0298 19.5008L9.7698 19.3398C7.4808 17.9198 5.3498 16.2598 3.4008 14.3798C2.0608 13.0308 1.0298 11.3898 0.389803 9.5808C-0.740197 6.0408 0.589803 1.9908 4.3208 0.769803C4.6108 0.669803 4.9098 0.599803 5.2098 0.560803H5.3298C5.6108 0.519803 5.8898 0.500643 6.1698 0.500643H6.2798ZM15.1898 3.6608C14.7798 3.5198 14.3298 3.7408 14.1798 4.1608C14.0398 4.5808 14.2598 5.0408 14.6798 5.1898C15.3208 5.4298 15.7498 6.0608 15.7498 6.7598V6.7908C15.7308 7.0198 15.7998 7.2408 15.9398 7.4108C16.0798 7.5808 16.2898 7.6798 16.5098 7.7008C16.9198 7.6898 17.2698 7.3608 17.2998 6.9398V6.8208C17.3298 5.4198 16.4808 4.1508 15.1898 3.6608Z" />
+                                                </svg>
+                                             </a>
+
+                                                {% else %}
+                                                
+                                            <a href="{% url 'post-like' %}"  id="likebtn{{ post.id }}">
+                                                <svg x-if="isLiked"  width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path     fill="" stroke="#b8c5cb"  d="M6.2798 0.500643C6.9098 0.519803 7.5198 0.629803 8.1108 0.830803H8.1698C8.2098 0.849803 8.2398 0.870803 8.2598 0.889803C8.4808 0.960803 8.6898 1.0408 8.8898 1.1508L9.2698 1.3208C9.4198 1.4008 9.5998 1.5498 9.6998 1.6108C9.7998 1.6698 9.9098 1.7308 9.9998 1.7998C11.1108 0.950803 12.4598 0.490803 13.8498 0.500643C14.4808 0.500643 15.1108 0.589803 15.7098 0.790803C19.4008 1.9908 20.7308 6.0408 19.6198 9.5808C18.9898 11.3898 17.9598 13.0408 16.6108 14.3898C14.6798 16.2598 12.5608 17.9198 10.2798 19.3498L10.0298 19.5008L9.7698 19.3398C7.4808 17.9198 5.3498 16.2598 3.4008 14.3798C2.0608 13.0308 1.0298 11.3898 0.389803 9.5808C-0.740197 6.0408 0.589803 1.9908 4.3208 0.769803C4.6108 0.669803 4.9098 0.599803 5.2098 0.560803H5.3298C5.6108 0.519803 5.8898 0.500643 6.1698 0.500643H6.2798ZM15.1898 3.6608C14.7798 3.5198 14.3298 3.7408 14.1798 4.1608C14.0398 4.5808 14.2598 5.0408 14.6798 5.1898C15.3208 5.4298 15.7498 6.0608 15.7498 6.7598V6.7908C15.7308 7.0198 15.7998 7.2408 15.9398 7.4108C16.0798 7.5808 16.2898 7.6798 16.5098 7.7008C16.9198 7.6898 17.2698 7.3608 17.2998 6.9398V6.8208C17.3298 5.4198 16.4808 4.1508 15.1898 3.6608Z" />
+                                                    </svg>
+                                            </a>
+                                                {% endif %}
+                                            </button>
+                                                <div class="ml-1 text-gray-400 font-thin text-ms"> {{ post.likes.count }} </div>
+                                           
+                                        </div>
+                                       
+
+
+                                        <div class='flex text-gray-700 font-normal text-sm rounded-md mb-2 mr-4 items-center'>
+                                            <a href="{% url 'post-detail' post.id %}">
+                                            <svg width="20" height="20" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12.7065 0.166992C16.0583 0.166992 19.2083 1.47016 21.5743 3.83733C26.465 8.72799 26.465 16.6847 21.5743 21.5753C19.1768 23.974 15.9486 25.2433 12.6785 25.2433C10.8958 25.2433 9.10147 24.8665 7.42264 24.0895C6.92797 23.8912 6.4648 23.7045 6.1323 23.7045C5.74964 23.7068 5.23514 23.8842 4.73814 24.0557C3.71847 24.4057 2.44914 24.842 1.50997 23.9063C0.574303 22.9695 1.00597 21.7037 1.35364 20.6852C1.52514 20.1835 1.7013 19.6655 1.7013 19.2735C1.7013 18.9515 1.54614 18.5408 1.30814 17.9493C-0.877031 13.2302 0.133303 7.54266 3.8398 3.83849C6.2058 1.47133 9.35464 0.166992 12.7065 0.166992ZM12.7076 1.91699C9.82247 1.91699 7.1123 3.03933 5.07647 5.07633C1.8868 8.26366 1.0188 13.1578 2.91464 17.2563C3.18764 17.9318 3.4513 18.5898 3.4513 19.2735C3.4513 19.956 3.2168 20.6432 3.0103 21.2498C2.83997 21.7492 2.58214 22.5028 2.7478 22.6685C2.90997 22.8365 3.6683 22.5717 4.1688 22.4002C4.76964 22.1948 5.45097 21.9592 6.12647 21.9545C6.80314 21.9545 7.4413 22.2112 8.1168 22.483C12.255 24.3963 17.1491 23.526 20.3376 20.3387C24.5446 16.1293 24.5446 9.28216 20.3376 5.07516C18.3006 3.03816 15.5916 1.91699 12.7076 1.91699ZM17.3124 12.0235C17.9564 12.0235 18.479 12.545 18.479 13.1901C18.479 13.8353 17.9564 14.3568 17.3124 14.3568C16.6684 14.3568 16.141 13.8353 16.141 13.1901C16.141 12.545 16.6579 12.0235 17.3019 12.0235H17.3124ZM12.6354 12.0235C13.2794 12.0235 13.8021 12.545 13.8021 13.1901C13.8021 13.8353 13.2794 14.3568 12.6354 14.3568C11.9914 14.3568 11.4641 13.8353 11.4641 13.1901C11.4641 12.545 11.9798 12.0235 12.6249 12.0235H12.6354ZM7.95802 12.0235C8.60202 12.0235 9.12469 12.545 9.12469 13.1901C9.12469 13.8353 8.60202 14.3568 7.95802 14.3568C7.31402 14.3568 6.78669 13.8353 6.78669 13.1901C6.78669 12.545 7.30352 12.0235 7.94752 12.0235H7.95802Z" fill="#B4C1C8"/>
+                                                </svg>
+                                            </a>
+                                            <div class="ml-1 text-gray-400 font-thin text-ms">{{ post.details.count }}</div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="mt-3 mx-5 w-full flex justify-end">
+                                        <div class='flex text-gray-700 font-normal text-sm rounded-md mb-2  items-center'>
+                                            <span class="transition ease-out duration-300 hover:bg-blue-50 bg-blue-100 h-8 px-2 py-2 text-center rounded-full text-blue-400 cursor-pointer ">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="14px" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                                            </svg>
+                                           </span> 
+                                       </div>
+                                    </div>
+
+                                </div>
+
+                            
+                            </div>
+                     </div>
+           
+               
+                    {% endfor %}  
+                
+             
+
+
+
+
+{# --------------------------Paginate Section-------------------------------  #}
+<div class="flex justify-center">
+    {% if is_paginated %}
+    <ul class="flex pl-0 list-none rounded my-2">
+        {% if page_obj.has_previous %}
+        
+        <li class="relative block py-3 px-3 leading-tight bg-white border border-gray-300 text-blue-700 border-r-0 ml-0 rounded-l hover:bg-gray-200">
+            <a class="text-cyan-500" href="?page=1">First</a>
+        </li>
+           
+         <li class="relative block py-3  px-3 leading-tight bg-white border border-gray-300 text-blue-700 border-r-0 hover:bg-gray-200">
+                <a class="text-cyan-500"  href="?page={{ page_obj.previous_page_number }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8899a4" stroke-width="2" stroke-linecap="round" stroke-linejoin="arcs"><path d="M15 18l-6-6 6-6"></path></svg></a>
+        </li>
+            
+        {% endif %}
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <li class="relative block py-3 px-3 leading-tight bg-white border border-gray-300 text-blue-700 border-r-0 hover:bg-gray-200">
+                <a class="text-cyan-500" href="?page={{ num }}">{{ num }}</a></li>
+               
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <li class="relative block py-3 px-3 leading-tight bg-white border border-gray-300 text-blue-700 border-r-0 hover:bg-gray-200">
+                <a class="text-cyan-500" href="?page={{ num }}">{{ num }}</a></li>
+               
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="relative block py-3 px-3 leading-tight bg-white border border-gray-300 text-blue-700 border-r-0 hover:bg-gray-200">
+            <a class="text-cyan-500"  href="?page={{ page_obj.next_page_number }}"><svg xmlns="http://www.w3.org/2000/svg"  width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8899a4" stroke-width="2" stroke-linecap="round" stroke-linejoin="arcs"><path d="M9 18l6-6-6-6"></path></svg></a></li>
+
+            <li class="relative block py-3 px-3 leading-tight bg-white border border-gray-300 text-blue-700 rounded-r hover:bg-gray-200">
+                <a class="text-cyan-500" href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+   
+        {% endif %}
+    </ul>
+    {% endif %}
+</div>
+
+{# ------------------------END--Paginate Section-------------------------------  #}
+{% endblock post %}
+
+{% block jsfiles %}
+    <script>
+        {% comment %} $(".like").click(function (e) {
+            var id = this.id;
+            var href = $(".like").find("a").attr("href");
+            e.preventDefault();
+
+            $.ajax({
+                url: href,
+                data: {
+                    likeId: id,
+                },
+                success: function (response) {
+                    if (response.liked) {
+                        $("#likebtn" + id).html("Unlike");
+                        $("#likebtn" + id).css("color", "red");
+                    } else {
+                        $("#likebtn" + id).html("Like");
+                        $("#likebtn" + id).css("color", "green");
+                    }
+                },
+            });
+        }); {% endcomment %}
+    </script>
+{% endblock jsfiles %}

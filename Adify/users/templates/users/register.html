@@ -1,0 +1,67 @@
+{% extends "feed/layout.html" %}  {% load static %}
+{% load widget_tweaks %}  
+{% block navbar %}{% endblock %}
+{% block content %}
+
+<div class="grid mt-8 min-h-screen place-items-center justify-center mx-auto ">
+  <a class="flex mb-9 text-2xl text-gray-800 font-semibold leading-7 uppercase " href="{% url 'home' %}">
+    <img class="w-20 mr-5 ml-4 " width="30px" height="40px" src="https://res.cloudinary.com/dvukj9sqf/image/upload/v1651106793/WhatsApp_Image_2022-04-20_at_11.07.38_PM__1_-removebg-preview_cilzl9.png" alt="" />
+    <h4 class="my-auto ">247ericpointcom</h4>
+  </a>
+  <div class=" p-12 bg-white w-[600px] rounded-md shadow-lg">
+    <div class="flex justify-center flex-col justify-items-center items-center">
+    <h1 class="text-xl font-semibold leading-relaxed ">Create a new account</h1>
+    <span class="text-slate-400">its quick and easy</span>
+    </div>
+  </br>
+    <form class="mt-6"  method="POST">
+      {% csrf_token %}
+     
+     {% if form.errors %}
+       <ul> 
+    {% for field in form %}
+        {% for error in field.errors %} 
+
+          <p class="ml-8 text-red-800"><li style="color:red"class="text-red">{{ error|escape }}</li></p>
+        </div>
+        
+        {% endfor %}
+    {% endfor %}
+       </ul>
+{% endif %} 
+
+
+      <div class="mb-8">
+        <label for="email" class="block mt-2 text-xs font-semibold text-gray-600 uppercase">UserName</label>
+        {% render_field form.username type="text" class="block align-baseline rounded-full w-full p-4 mt-2 text-gray-700  appearance-none focus:outline-none  focus:shadow-inner" id="exampleInputUsername" placeholder="Username" %}
+        </div>
+
+      <div class="mb-8">
+      <label for="email" class="block mt-2 text-xs font-semibold text-gray-600 uppercase">E-mail</label>
+      {% render_field form.email type="text" class="block align-baseline rounded-full w-full p-4 mt-2 text-gray-700  appearance-none focus:outline-none  focus:shadow-inner" id="exampleInputUsername" placeholder="  john.doe@company.com" %}
+     
+      </div>
+      <div class="flex justify-between gap-6 mb-8">
+        <span class="w-1/2">
+      <label for="password" class="block mt-2 text-xs font-semibold text-gray-600 uppercase">Password</label>
+      {% render_field form.password1 type="password" class="block align-bottom rounded-full w-full p-4 mt-2 text-gray-700  appearance-none focus:outline-none  focus:shadow-inner" id="exampleInputPassword" placeholder="Password" %}
+     
+        </span>
+        <span class="w-1/2">
+      <label for="password-confirm" class="block mt-2 text-xs font-semibold text-gray-600 uppercase">Confirm password</label>
+      {% render_field form.password2 type="password" class="block align-bottom  rounded-full w-full p-4 mt-2 text-gray-700  appearance-none focus:outline-none  focus:shadow-inner" id="exampleInputPassword1" placeholder="Confirm Password" %}
+     
+        </span>
+      </div>
+      <button  type="submit" class="w-full bg-[#7DC9F0] rounded-full py-4  mb-4 font-medium tracking-widest text-white uppercase  shadow-lg border-2 hover:border-[#7DC9F0] hover:bg-white hover:text-[#7DC9F0] hover:shadow-none">
+        Sign up
+      </button>
+      <div class="flex justify-center">
+      <p class="flex justify-between inline-block mt-4 text-xs text-gray-500 cursor-pointer  text-lg">Already have an account?  <a href="{% url 'login' %} " class="text-[#7DC9F0] font-bold text-lg"> Sign in</a></p>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+{% endblock content %}
