@@ -24,28 +24,88 @@
 
 
  {% block aside %} 
- <div
- class="row-span-2 lg:visible md:flex   sm:hidden  xs:hidden  border border-gray-100 bg-purple-100   transition-shadow shadow-xl hover:shadow-xl ">
+ <div class="row-span-2 lg:visible md:flex   sm:hidden  xs:hidden  ">
  
- 
-    right
+    <aside class="">
+    
+         <div class="bg-white shadow rounded-lg  px-8 py-12 mt-4">
+             <div class="flex flex-col gap-1 text-center items-center">
+        
+                <img class="h-32 w-32 p-2 rounded-lg  mb-4" src="{{ request.user.profile.image.url }}" alt="">
+                <p class="font-semibold capitalize">{{ request.user }}</p>
+                 {% if request.user.profile.location %}
+                <div class="text-sm leading-normal text-gray-400 flex justify-center items-center">
+                     <svg viewBox="0 0 24 24" class="mr-1" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                     {{ request.user.profile.location }}
+                </div>
+                    {% endif %}
+            </div> 
+
+        <div class="flex justify-evenly items-center gap-2 my-5">
+            <div class="font-semibold text-center mx-4">
+                <p class="text-black">{{ request.user.profile.friends.count }}</p>
+                <span class="text-gray-400">Posts</span>
+            </div>
+            <div class="font-semibold text-center mx-4">
+                <p class="text-black">{{ post_count.count }}</p>
+                <span class="text-gray-400">Clients</span>
+            </div>
+        </div>
+
+         <div class="flex justify-evenly items-center gap-2 my-5">
+            <div class="font-semibold text-center mx-4">
+                <button type="submit"class="bg-slate-200 mt-5 hover:bg-slate-300 text-black text-sm py-2 px-4 rounded"><a href="{% url 'my_profile' %}">Profile</a></button>
+               
+            </div>
+
+            <div class="font-semibold text-center mx-4">
+                <button type="submit"class="bg-slate-200 mt-5 hover:bg-slate-300 text-black text-sm py-2 px-6 rounded"><a href="{% url 'edit_profile' %}">Edit</a></button>
+                
+            </div>
+
+         </div>
+
      
- 
+
+    </aside>
+     
  </div>
 {% endblock aside %} 
 
 {% block side %} 
-<div class="row-span-3 lg:visible md:flex  sm:hidden  xs:hidden border border-gray-100 bg-purple-100   transition-shadow shadow-xl hover:shadow-xl ">
-			
-			
-				left
-				
-			
-			</div>
+<div class="row-span-3 lg:visible md:flex  sm:hidden  xs:hidden ">
+    <aside class="px-8">
+    
+        <div class="bg-white shadow rounded-lg px-8 py-8 mt-4">
+            <div class="ml-4 my-4">
+                <span class="font-medium text-lg leading-4">My Clients ( {{ request.user.profile.friends.count }} )</span>
+            </div>
+
+            {% for friends in request.user.profile.friends.all %}
+                <div class=" flex flex-col cursor-pointer  p-4 duration-300  sm:flex-row sm:py-4 sm:px-8 hover:bg-[#f6f8f9]">
+                    <div class="flex justify-between items-center text-center flex-row sm:flex-row sm:text-left">
+                    
+                        <div class=" mb-2.5 sm:mb-0 sm:mr-2.5">
+                            <img class='w-12 h-12 object-cover rounded-md shadow cursor-pointer' src="{{friends.image.url}}"/>
+                        </div>
+
+                        <div class=" flex flex-col mb-4 sm:mb-0 sm:mr-4">
+                            <a href="#" class="title font-medium no-underline">{{friends.user}}</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            {% endfor %}
+            <!--Button content -->
+
+        </div>
+   </aside>
+</div>
 {% endblock side %}
 
 {% block form %}
-<div class="flex justify-center align-center mx-1   my-5   col-span-2  px-2  ">
+<div class="flex justify-center align-center mx-1 w-full my-5 col-start-2  col-span-2 sm:col-start-2 lg:col-start-2 md:col-start-2 px-2  ">
 <div class="w-full max-w-xl">
    
     <div class="bg-white shadow rounded-sm  p-3">
@@ -94,9 +154,10 @@
 {% block post %}
 
 {# --------------------------Post Container-------------------------------  #}
-              
+
                 {% for post in posts %}
-                    <div class='flex  max-w-xl my-10 bg-white shadow-md rounded-lg overflow-hidden mx-auto '>
+                
+                    <div class='max-w-xl my-10 bg-white shadow-md rounded-lg mx-auto '>
                             <div class='w-full'>
 
                                 <div class="flex flex-row mt-2 px-2 py-3 mx-3">
@@ -110,11 +171,13 @@
                                         <div class='text-gray-600 text-sm font-semibold capitalize'><a  href="{{ post.user_name.profile.get_absolute_url }}">
                                             {{ post.user_name }}</a>
                                         </div>
+
                                         <div class='flex w-full mt-1.5 '>
                                             <div class="text-gray-400 font-thin text-xs">
                                                 Posted on {{ post.date_posted|date:"D d M Y" }}
                                             </div>
                                         </div>
+
                                     </div>
                                    
                                 </div>
@@ -230,11 +293,12 @@
 
                             
                             </div>
-                        </div>
-                    
+                     </div>
+           
+               
                     {% endfor %}  
                 
-              
+             
 
 
 

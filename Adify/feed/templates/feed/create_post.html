@@ -38,7 +38,7 @@
 
                 <div class="md:col-span-2 ">
                   <label class="mb-5" for="image">Upload An Image</label>
-                  {% render_field form.pic  class=" cursor-pointer my-1 mb-2  p-3 file:px-7 file:py-2 file:bg-blue-50 file:border-0 file:text-cyan-500 file:rounded-md  text-slate-500" x-text="choose image" %}   
+                  {% render_field form.pic  class="cursor-pointer my-1 mb-2  p-3 file:px-7  file:py-2 file:bg-cyan-50 file:border-0 file:text-cyan-500 file:rounded-md  text-slate-500" %}   
                 </div>
   
   
@@ -64,7 +64,15 @@
               {{form.media}}
               {% render_field form.tags type="text"    class="h-10 w-full text-slate-500 border-slate-200 mt-1 rounded px-4 bg-gray-50 placeholder:italic placeholder:text-slate-400"  %}   
             </div>  
+            {% if request.resolver_match.url_name == 'post-update' %}
+            <div class="md:col-span-5 text-right">
+              <div class="inline-flex items-end">
+                <button type="submit"class="bg-cyan-400 mt-5 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update</button>
+              </div>
+            </div>
+            {% endif %} 
 
+            {% if request.resolver_match.url_name == 'post-create' %}
             <div class="md:col-span-5  border-b border-gray-100 mt-5"></div> 
             <div class="md:col-span-5 flex flex-row justify-between content-center items-center h-12 w-full">
                 <div  class="flex justify-end text-lg text-slate-500"><h2>Total Amount</h2></div>
@@ -72,23 +80,25 @@
             </div>  
 
 
-
+            
            <div class="md:col-span-5 text-right mt-5">
                 <div class="inline-flex items-end">
                   <div id="paypal-button-container-P-1N273155E86601137MDO2KQA"></div>
                 </div>
               </div> 
+              
 
 
 
               <script src="https://www.paypal.com/sdk/js?client-id=AUsbaXnO5yOWjn0S8uT-2CBqtRUhd1E2Hal7XtRM9Vs2tjxN7VxkqVeP7dKWyKc6mOLJ4LQgdhOvtB9j&vault=true&intent=subscription"
                       data-sdk-integration-source="button-factory"></script>
+                      {% endif %} 
               <script>
                   paypal.Buttons({
                       style: {
                           shape: 'pill',
                           height: 45,
-                          color: 'blue',
+                          color: 'white',
                           layout: 'horizontal',
                           label: 'paypal',
                           tagline: 'true',
@@ -143,70 +153,7 @@
 
 
   
-  {% comment %} <div class="row">
-    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-      <div class="card card-signin my-5">
-        <div class="card-body">
-          <h5 class="card-title text-center"><b>Post</b></h5>
-          <form class="form-signin" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <fieldset class="form-group">
-              <br />
-              {{ form|crispy }}
-                <br><h5 class="total">Total</h5><h1>$23.00</h1>
-            </fieldset>
-              <div class="form-group">
 
-            <!-- <button
-                class="btn btn-lg btn-primary btn-block text-uppercase"
-                type="submit">Post</button>-->
-
-                 <div id="paypal-button-container-P-1N273155E86601137MDO2KQA"></div>
-                  <script src="https://www.paypal.com/sdk/js?client-id=AUsbaXnO5yOWjn0S8uT-2CBqtRUhd1E2Hal7XtRM9Vs2tjxN7VxkqVeP7dKWyKc6mOLJ4LQgdhOvtB9j&vault=true&intent=subscription"
-                          data-sdk-integration-source="button-factory"></script>
-                  <script>
-                      paypal.Buttons({
-                          style: {
-                              shape: 'pill',
-                              color: 'gold',
-                              layout: 'vertical',
-                              label: 'subscribe'
-                          },
-                          createSubscription: function (data, actions) {
-                              return actions.subscription.create({
-                                  /* Creates the subscription */
-                                  plan_id: 'P-1N273155E86601137MDO2KQA'
-                              });
-                          },
-                          onApprove: function (data, actions) {
-                              alert(data.subscriptionID); // You can add optional success message for the subscriber here
-                              window.alert('Thank you for your payment, continue and submit you ad now!');
-                              location.href = '{% url 'posts-create' %}';
-                          },
-                          onError: function (err) {
-                              // Show an error page here, when an error occurs
-                              //  window.location.href = "/your-error-page-here";
-                              window.alert('An Error Occured!');
-                              location.href = '{% url 'home' %}';
-
-                          },
-                          onCancel: function (data, actions) {
-                              // Show a cancel page or return to cart
-                              window.alert('Your Payment Was Cancelled!');
-                              location.href = '{% url 'home' %}';
-                          },
-
-                      }).render('#paypal-button-container-P-1N273155E86601137MDO2KQA'); // Renders the PayPal button
-                  </script>
-
-
-                  <br />
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div> {% endcomment %}
 
 
 {% endblock content %}

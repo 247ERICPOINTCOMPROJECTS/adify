@@ -31,7 +31,9 @@ class PostListView(ListView):
 	def get_context_data(self, **kwargs):
 		context = super(PostListView, self).get_context_data(**kwargs)
 		context['profile'] = Profile.objects.all()
+		
 		if self.request.user.is_authenticated:
+			context['post_count'] = Post.objects.filter(user_name=self.request.user)
 			liked = [i for i in Post.objects.all() if Like.objects.filter(user = self.request.user, post=i)]
 			context['liked_post'] = liked
 		return context

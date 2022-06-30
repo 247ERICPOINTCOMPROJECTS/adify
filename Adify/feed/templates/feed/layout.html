@@ -218,7 +218,7 @@
 
     {% block content %} 
 
-   <div {% if user.is_authenticated %} class=" grid-flow-row auto-rows-max justify-center grid grid-cols-4 lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-1  xs:grid-cols-1  gap-1" {% endif %} >
+   <div {% if user.is_authenticated %} class=" grid-flow-row overflow-hidden  auto-rows-max  grid grid-cols-4 justify-center lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-1  xs:grid-cols-1  gap-1" {% endif %} >
     
       {% if user.is_authenticated %} 
       {% block side %} {% endblock side %} 
@@ -226,10 +226,10 @@
        {% block aside %} {% endblock aside %}
         {% endif %}
 
-      <div class="col-span-2 w-full  col-start-2 flex flex-col  bg-blue-200 place-self-center">
+      <div class="col-span-2  h-full w-full col-start-2 lg:col-start-2 md:col-start-2 sm:col-start-2">
         
        {% block post %} {% endblock post %} 
-       
+        
       </div>
 
    </div>

@@ -11,7 +11,7 @@ class Post(models.Model):
     price = models.FloatField("post price", default='15')
     description = RichTextField(blank=True,max_length=255)
     # description = models.TextField(max_length=255, blank=False)
-    pic = models.ImageField(upload_to='path/to/img', blank=True)
+    pic = models.ImageField(upload_to='path/to/img', blank=False)
     video = models.FileField(upload_to='videos/', validators=[file_size], blank=True)
     date_posted = models.DateTimeField(default=timezone.now)
     user_name = models.ForeignKey(User, on_delete=models.CASCADE)
